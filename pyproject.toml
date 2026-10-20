@@ -1,0 +1,18 @@
+[project]
+name = "fairino-controller"
+version = "0.1.0"
+description = "A simulated Fairino FR5 with a live 3D view: click the floor and it works out the joint angles to go there."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "arkitekt[rekuest]>=7.2.1",
+    "numpy>=2.5.4",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+addopts = "-m 'not hub'"
