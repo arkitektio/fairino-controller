@@ -5,7 +5,7 @@ Run:  python app.py   (or `arkitekt run dev`)
 The arm is simulated: its actions move six numbers, not a robot. What it shows is the
 real CAD model. ``models/fairino_cad.glb`` has no joints, so ``fairino_model`` gives it
 six and writes ``models/fairino_robot.glb``; the app registers that file as the asset
-``arm`` and its scene blok names it as ``@self.assets.arm``. When the app runs it
+``arm`` and its scene blok names it as ``self.assets.arm``. When the app runs it
 uploads the file if the organization has not stored it yet. After changing
 ``fairino_model``, run ``python fairino_model.py`` to write the models again.
 
@@ -178,16 +178,18 @@ def move_to(
 app.blok(
     "fairino-panel",
     bsx("""
-    <Card>
-      <CardHeader><CardTitle text="Fairino FR5" /></CardHeader>
-      <CardContent>
-        <Row>
-          <Button label="Reach out" onClick="@self.reach_out()" />
-          <Button label="Look around" onClick="@self.look_around()" />
-          <Button label="Fold" onClick="@self.fold()" />
-        </Row>
-      </CardContent>
-    </Card>
+    <Html>
+      <Card>
+        <CardHeader><CardTitle text="Fairino FR5" /></CardHeader>
+        <CardContent>
+          <Row>
+            <Button label="Reach out" onClick={self.reach_out()} />
+            <Button label="Look around" onClick={self.look_around()} />
+            <Button label="Fold" onClick={self.fold()} />
+          </Row>
+        </CardContent>
+      </Card>
+    </Html>
     """),
     description="The arm's controls.",
     default=True,
@@ -197,23 +199,22 @@ app.blok(
     "fairino-3d",
     bsx("""
     <Scene camera="iso" height="100%">
-      <Robot id="arm" src="@self.assets.arm"
-             joints="@self.arm.joints"
-             animateTo="@self.arm.targets"
-             speed="@self.arm.speeds"
-             onJointChange="@self.move_joint(name=event.name, position=event.value)">
-        <OnClick node="base" onClick="@self.fold()" />
+      <Robot id="arm" src={self.assets.arm}
+             joints={self.arm.joints}
+             animateTo={self.arm.targets}
+             speed={self.arm.speeds}
+             onJointChange={self.move_joint(name: event.name, position: event.value)}>
+        <OnClick node="base" onClick={self.fold()} />
         <Popout node="link_6" trigger="hover">
           <Badge text="Tool flange" variant="outline" />
         </Popout>
       </Robot>
-      <Model id="workspace" src="@self.assets.workspace">
-        <OnClick node="floor" onClick="@self.move_to(point=event.point)" />
+      <Model id="workspace" src={self.assets.workspace}>
+        <OnClick node="floor" onClick={self.move_to(point: event.point)} />
       </Model>
     </Scene>
     """),
     description="The arm in 3D: its six joints follow the agent, a joint set by hand moves the arm, and a click on the floor sends the flange there.",
-    context="scene",
     default=True,
 )
 
