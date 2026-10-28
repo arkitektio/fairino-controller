@@ -5,7 +5,7 @@ description = "A simulated Fairino FR5 with a live 3D view: click the floor and 
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "arkitekt[rekuest]>=10.0",
+    "arkitekt[rekuest]>=10.0.1",
     "numpy>=2.5.4",
 ]
 
