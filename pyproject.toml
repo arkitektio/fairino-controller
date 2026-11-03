@@ -5,7 +5,7 @@ description = "A simulated Fairino FR5 with a live 3D view: click the floor and 
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "arkitekt[rekuest]>=13.0.0",
+    "arkitekt[rekuest]>=13.1.0",
     "numpy>=2.5.4",
 ]
 
@@ -16,3 +16,7 @@ dev = [
 
 [tool.pytest.ini_options]
 addopts = "-m 'not hub'"
+
+[tool.ruff.lint]
+extend-select = ["UP"]
+extend-ignore = ["UP037", "UP038", "UP042", "UP040", "UP046", "UP047", "UP049"]
