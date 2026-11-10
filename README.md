@@ -1,5 +1,9 @@
 # fairino-controller
 
+<!-- arkitekt:badge -->
+[![Open in Arkitekt](https://arkitekt.live/img/badge/open-in-arkitekt.svg)](https://arkitekt.live/deeplink?orkestrator=%2Fdo%2Fv1%2Frepo.install%3Fsource%3Doci%253Aghcr.io%252Farkitektio%252Ffairino-controller)
+<!-- /arkitekt:badge -->
+
 A simulated Fairino FR5 as an Arkitekt app. The actions move six joint numbers, not a
 real robot. The 3D view (the `fairino-3d` scene blok) shows the real CAD model, which
 follows those joints.
