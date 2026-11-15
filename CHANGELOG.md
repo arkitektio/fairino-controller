@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.1.4 (2026-11-15)
+
+### Bug Fixes
+
+- **deps**: Arkitekt 17 and arkitekt-spec 11
+  ([`6d834eb`](https://github.com/arkitektio/fairino-controller/commit/6d834eb1730531fb02a4f3dc81b42bdc25601e81))
+
+
 ## v0.1.3 (2026-11-15)
 
 ### Bug Fixes
