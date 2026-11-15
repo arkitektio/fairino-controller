@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.1.3 (2026-11-15)
+
+### Bug Fixes
+
+- Publish the release its tag push kept back
+  ([`f988355`](https://github.com/arkitektio/fairino-controller/commit/f9883556f2af477ed24ab517c71d242cba02e352))
+
+
 ## v0.1.2 (2026-11-15)
 
 ### Bug Fixes
