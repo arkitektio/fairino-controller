@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.1.2 (2026-11-15)
+
+### Bug Fixes
+
+- **deps**: Rekuest 15.0.1 and arkitekt-runtime 10.0.1
+  ([`8233e7c`](https://github.com/arkitektio/fairino-controller/commit/8233e7cdc25b3806f08aef3bc0e2e7fc7e053a7c))
+
+
 ## v0.1.1 (2026-11-15)
 
 ### Bug Fixes
