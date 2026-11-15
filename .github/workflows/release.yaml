@@ -1,0 +1,55 @@
+name: Release
+
+# Every push to main is tested and published. semantic-release reads the commits since
+# the last release (https://www.conventionalcommits.org): if a `fix:` or a `feat:` is among
+# them it raises the app's version in app.py, commits and tags that (v1.2.3), and the
+# commit is published as that release. Any other push publishes the latest build of the
+# main channel.
+on:
+  push:
+    branches: [main]
+
+# One release at a time: the next push waits for the version this one may commit.
+concurrency: release-${{ github.ref }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      # To push the version's commit and tag, and to create the GitHub release.
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # semantic-release reads the whole history, and its tags.
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v6
+      # Before a version is cut: a tag is not taken back when a test fails after it.
+      - name: Test
+        run: uv run pytest
+      - name: Version
+        id: version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: uvx --from "python-semantic-release>=10,<11" semantic-release version
+      - uses: arkitektio/arkitekt/ci/github@v13.1.0
+        with:
+          target: app
+          # The commit semantic-release tagged is that release, not a build of the branch.
+          release: ${{ steps.version.outputs.released }}
+      # The README's "Open in Arkitekt" badge installs the package published above, which
+      # is only known here. Written on the first run (and if the repository moves), where
+      # the README has a place for it; after the release, which builds a clean tree.
+      - name: Badge
+        # Cosmetic: never what fails a run whose release went out.
+        continue-on-error: true
+        run: |
+          uv run arkitekt plugin badge --update --repository "ghcr.io/${{ github.repository }}"
+          if ! git diff --quiet -- README.md; then
+            git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "docs: point the install badge at this repository's package [skip ci]" -- README.md
+            git push origin "HEAD:${{ github.ref_name }}" \
+              || echo "::warning::Could not push the README badge; the next run writes it again."
+          fi

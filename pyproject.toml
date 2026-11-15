@@ -20,3 +20,13 @@ addopts = "-m 'not hub'"
 [tool.ruff.lint]
 extend-select = ["UP"]
 extend-ignore = ["UP037", "UP038", "UP042", "UP040", "UP046", "UP047", "UP049"]
+
+[tool.semantic_release]
+version_variables = ["app.py:__version__"]
+commit_message = "chore(release): {version} [skip ci]"
+tag_format = "v{version}"
+allow_zero_version = true
+
+[tool.semantic_release.branches.release]
+match = "main"
+prerelease = false
