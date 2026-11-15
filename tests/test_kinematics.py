@@ -101,7 +101,30 @@ def test_out_of_reach_raises(chain: fairino_kinematics.Chain) -> None:
 
 @pytest.mark.parametrize("build, path", [(fairino_model.build, fairino_model.ARM), (fairino_model.workspace, fairino_model.WORKSPACE)])
 def test_the_models_are_up_to_date(build, path: Path) -> None:
-    assert path.read_bytes() == build(), f"run `python fairino_model.py` to write {path.name} again"
+    # Not byte for byte: the last bit of a float differs between processors.
+    stored, built = _glb(path.read_bytes()), _glb(build())
+    stale = f"run `python fairino_model.py` to write {path.name} again"
+    assert _same(stored[0], built[0]), stale
+    assert stored[1].shape == built[1].shape, stale
+    assert np.allclose(stored[1], built[1], atol=1e-5, equal_nan=True), stale
+
+
+def _glb(data: bytes) -> tuple[object, np.ndarray]:
+    """A GLB's two chunks: its JSON document, and its buffer as 32-bit floats."""
+    json_length = struct.unpack_from("<I", data, 12)[0]
+    document = json.loads(data[20 : 20 + json_length])
+    return document, np.frombuffer(data[20 + json_length + 8 :], dtype="<f4")
+
+
+def _same(a: object, b: object) -> bool:
+    """Equal, with numbers compared to five decimals."""
+    if isinstance(a, dict) and isinstance(b, dict):
+        return a.keys() == b.keys() and all(_same(a[key], b[key]) for key in a)
+    if isinstance(a, list) and isinstance(b, list):
+        return len(a) == len(b) and all(_same(x, y) for x, y in zip(a, b))
+    if isinstance(a, float) or isinstance(b, float):
+        return isinstance(a, (int, float)) and isinstance(b, (int, float)) and abs(a - b) <= 1e-5
+    return a == b
 
 
 def test_arm_keeps_its_joint_table(arm: bytes) -> None:
