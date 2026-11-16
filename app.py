@@ -178,7 +178,7 @@ def move_to(
 app.blok(
     "fairino-panel",
     bsx("""
-    <Html>
+    <Blok kind="agent" context="panel">
       <Card>
         <CardHeader><CardTitle text="Fairino FR5" /></CardHeader>
         <CardContent>
@@ -189,7 +189,7 @@ app.blok(
           </Row>
         </CardContent>
       </Card>
-    </Html>
+    </Blok>
     """),
     description="The arm's controls.",
     default=True,
@@ -198,6 +198,7 @@ app.blok(
 app.blok(
     "fairino-3d",
     bsx("""
+    <Blok kind="agent" context="scene">
     <Scene camera="iso" height="100%">
       <Robot id="arm" src={self.assets.arm}
              joints={self.arm.joints}
@@ -213,6 +214,7 @@ app.blok(
         <OnClick node="floor" onClick={self.move_to(point: event.point)} />
       </Model>
     </Scene>
+    </Blok>
     """),
     description="The arm in 3D: its six joints follow the agent, a joint set by hand moves the arm, and a click on the floor sends the flange there.",
     default=True,
