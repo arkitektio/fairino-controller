@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v0.1.5 (2026-11-16)
+
+### Bug Fixes
+
+- Bloks are self-contained <Blok kind context> trees
+  ([`85c0bcb`](https://github.com/arkitektio/fairino-controller/commit/85c0bcb8f71e62af7cae67d8231d243d50f59343))
+
+### Build System
+
+- Lock arkitekt 18
+  ([`5d91525`](https://github.com/arkitektio/fairino-controller/commit/5d91525fccf1fae356ea0455ac9f9a5c70bec3dd))
+
+
 ## v0.1.4 (2026-11-15)
 
 ### Bug Fixes
