@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.1.6 (2026-11-24)
+
+### Bug Fixes
+
+- Build on arkitekt 18.5.2, rekuest 18, arkitekt-spec 13 and mikro 14.2
+  ([`4a16759`](https://github.com/arkitektio/fairino-controller/commit/4a167593499ec20c8571f5f6353cc18d0d19d2db))
+
+
 ## v0.1.5 (2026-11-16)
 
 ### Bug Fixes
