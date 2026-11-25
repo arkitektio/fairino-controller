@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.1.7 (2026-11-25)
+
+### Bug Fixes
+
+- Runs on arkitekt 19
+  ([`d647f74`](https://github.com/arkitektio/fairino-controller/commit/d647f74c20fba5e9726d138776c8cf50f17bbeac))
+
+
 ## v0.1.6 (2026-11-24)
 
 ### Bug Fixes
